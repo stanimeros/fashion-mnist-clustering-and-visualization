@@ -1,7 +1,7 @@
 import os
 
 # ── Toggle this to True for a fast end-to-end smoke-test ──────────
-QUICK_RUN = True
+QUICK_RUN = False
 
 RANDOM_STATE = 42
 N_CLUSTERS   = 10        # fashion-mnist has 10 classes

@@ -123,8 +123,8 @@ def plot_cluster_examples(x_images, y_true, labels, dr_name):
 def plot_results_heatmap(results_df):
     """Silhouette score heatmap: DR technique × clustering algorithm."""
     pivot = results_df.pivot_table(
-        index="DimReduction", columns="Clustering", values="Silhouette"
-    )
+        index="DimReduction", columns="Clustering", values="Silhouette", aggfunc="mean"
+    ).astype(float)
     fig, ax = plt.subplots(figsize=(11, 5))
     sns.heatmap(pivot, annot=True, fmt=".3f", cmap="YlGnBu", ax=ax)
     ax.set_title("Silhouette Score – DR technique × Clustering algorithm")

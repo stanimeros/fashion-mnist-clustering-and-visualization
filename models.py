@@ -145,7 +145,7 @@ def build_tsne(x_train_flat, x_test_flat, tsne_samples):
     print(f"  Running t-SNE on {tsne_samples} test samples …", end=" ", flush=True)
     t0 = time.time()
     X_enc = TSNE(
-        n_components=2, perplexity=30, n_iter=1000,
+        n_components=2, perplexity=30, max_iter=1000,
         random_state=RANDOM_STATE, n_jobs=-1,
     ).fit_transform(X_test_pca)
     tsne_time  = time.time() - t0

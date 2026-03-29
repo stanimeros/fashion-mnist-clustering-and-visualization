@@ -1,0 +1,10 @@
+tensorflow==2.21.0
+keras==3.13.2
+scikit-learn==1.8.0
+numpy==2.4.4
+pandas==3.0.1
+matplotlib==3.10.8
+seaborn==0.13.2
+umap-learn==0.5.11
+scipy==1.17.1
+h5py==3.14.0
