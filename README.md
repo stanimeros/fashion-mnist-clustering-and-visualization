@@ -13,7 +13,7 @@ cv-clustering/
 ├── clustering.py      # 5 clustering algorithms + 4 evaluation metrics
 ├── visualization.py   # All matplotlib/seaborn helpers
 ├── main.py            # Pipeline orchestrator
-├── run_pipeline.sh    # `quick` / `full` launcher (sets FASHION_MNIST_QUICK_RUN)
+├── run_pipeline.sh    # creates .venv, pip install, then `quick` or `full` run
 ├── requirements.txt
 └── figures/           # All generated plots (created automatically)
 ```
@@ -34,23 +34,27 @@ pip install -r requirements.txt
 
 ## Running
 
+**One-shot (recommended):** creates `.venv` if needed, upgrades `pip`, installs `requirements.txt`, then runs the pipeline.
+
+```bash
+chmod +x run_pipeline.sh
+./run_pipeline.sh        # full run (default)
+./run_pipeline.sh full
+./run_pipeline.sh quick  # smoke test
+```
+
+Uses `python3.11` for the venv when available, otherwise `python3`. Override with e.g. `PYTHON=python3.11 ./run_pipeline.sh`.
+
+Manual run (if you already have a venv):
+
 ```bash
 source .venv/bin/activate
 python main.py
 ```
 
-Full run is the default (`FASHION_MNIST_QUICK_RUN` unset or `0`). On a server, after creating the venv and installing deps once:
-
-```bash
-chmod +x run_pipeline.sh
-./run_pipeline.sh full
-# First-time dependency install on that machine:
-# INSTALL_DEPS=1 ./run_pipeline.sh full
-```
+Full run is the default when `FASHION_MNIST_QUICK_RUN` is unset or `0`.
 
 ### Quick smoke-test mode
-
-Either:
 
 ```bash
 FASHION_MNIST_QUICK_RUN=1 python main.py

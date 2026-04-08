@@ -7,7 +7,7 @@ Modules
   clustering.py    – 5 clustering algorithms + 4 evaluation metrics
   visualization.py – all matplotlib helpers
 
-Set  QUICK_RUN = True  in config.py for a fast end-to-end smoke-test.
+Quick mode:  FASHION_MNIST_QUICK_RUN=1  or  ./run_pipeline.sh quick
 """
 import warnings
 warnings.filterwarnings('ignore')
