@@ -13,7 +13,8 @@ cv-clustering/
 ├── clustering.py      # 5 clustering algorithms + 4 evaluation metrics
 ├── visualization.py   # All matplotlib/seaborn helpers
 ├── main.py            # Pipeline orchestrator
-├── run_pipeline.sh    # creates .venv, pip install, then `quick` or `full` run
+├── run_pipeline.sh    # venv + deps + run; use `--background` for nohup + logs/
+├── logs/              # pipeline-*.log (created by background runs; gitignored)
 ├── requirements.txt
 └── figures/           # All generated plots (created automatically)
 ```
@@ -42,6 +43,15 @@ chmod +x run_pipeline.sh
 ./run_pipeline.sh full
 ./run_pipeline.sh quick  # smoke test
 ```
+
+**Background run** (μπορείς να κλείσεις το terminal· όλη η έξοδος πάει σε `logs/pipeline-YYYYMMDD-HHMMSS.log`):
+
+```bash
+./run_pipeline.sh --background          # full
+./run_pipeline.sh -b quick              # ή: --background quick
+```
+
+Θα εμφανιστεί το path του log και το PID· `logs/last.pid` κρατάει το τελευταίο. Παρακολούθηση: `tail -f logs/pipeline-....log`.
 
 Uses `python3.11` for the venv when available, otherwise `python3`. Override with e.g. `PYTHON=python3.11 ./run_pipeline.sh`.
 
