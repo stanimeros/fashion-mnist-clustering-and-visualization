@@ -12,7 +12,9 @@ BATCH_SIZE   = 256
 EPOCHS       = 3  if QUICK_RUN else 30
 # Subset sizes fed to clustering (test set is already 10 k; subsample for speed)
 CLUSTER_SAMPLES = 500   if QUICK_RUN else 10_000   # how many test samples to cluster
-TSNE_SAMPLES    = 500   if QUICK_RUN else 10_000   # t-SNE is O(n²) → subsample
+TSNE_SAMPLES    = 500   if QUICK_RUN else 10_000   # test points to embed & cluster
+# openTSNE is fit on a train subset; transform maps held-out test PCA features
+TSNE_TRAIN_SAMPLES = 500 if QUICK_RUN else 10_000
 
 CLASS_NAMES = [
     "T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",

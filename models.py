@@ -3,7 +3,7 @@ Dimensionality-reduction models:
   - PCA
   - Stacked Autoencoder (SAE)
   - Convolutional Stacked Autoencoder (CNN-SAE)
-  - t-SNE  (uses PCA-50 pre-reduction)
+  - t-SNE  (PCA-50 + openTSNE on train subset, transform test)
   - UMAP
 
 Each public function returns (encoder_fn, train_time, extras).
@@ -20,7 +20,7 @@ from tensorflow import keras
 from tensorflow.keras import layers, Model
 
 import umap
-from sklearn.manifold import TSNE
+from openTSNE import TSNE as OpenTSNE
 
 warnings.filterwarnings('ignore')
 
@@ -132,28 +132,45 @@ def build_cnn_sae(x_train_cnn, x_val_cnn):
 
 
 # ──────────────────────────────────────────────────────────────────
-# t-SNE  (PCA-50 pre-reduction, then t-SNE on test set directly)
+# t-SNE  (PCA-50 on train; openTSNE fit on train subset, transform test)
 # ──────────────────────────────────────────────────────────────────
-def build_tsne(x_train_flat, x_test_flat, tsne_samples):
-    # PCA step (fast, repeatable)
-    t0      = time.time()
-    pca50   = PCA(n_components=50, random_state=RANDOM_STATE)
+def build_tsne(x_train_flat, x_test_flat, tsne_samples, tsne_train_samples):
+    t0 = time.time()
+    pca50 = PCA(n_components=50, random_state=RANDOM_STATE)
     pca50.fit(x_train_flat)
     pca_time = time.time() - t0
 
-    X_test_pca = pca50.transform(x_test_flat[:tsne_samples])
-    print(f"  Running t-SNE on {tsne_samples} test samples …", end=" ", flush=True)
-    t0 = time.time()
-    X_enc = TSNE(
-        n_components=2, perplexity=30, max_iter=1000,
-        random_state=RANDOM_STATE, n_jobs=-1,
-    ).fit_transform(X_test_pca)
-    tsne_time  = time.time() - t0
-    train_time = pca_time + tsne_time
-    print(f"done ({tsne_time:.1f}s)")
+    rng = np.random.default_rng(RANDOM_STATE)
+    n_train = min(tsne_train_samples, len(x_train_flat))
+    train_idx = rng.choice(len(x_train_flat), size=n_train, replace=False)
+    X_tr_pca = pca50.transform(x_train_flat[train_idx])
 
-    # t-SNE has no transform(); return precomputed encodings
-    return X_enc, train_time, {}
+    perplexity = min(30, max(5, (n_train - 1) // 3))
+
+    print(
+        f"  openTSNE: fitting on {n_train} train points (perplexity={perplexity}) …",
+        end=" ",
+        flush=True,
+    )
+    t0 = time.time()
+    tsne = OpenTSNE(
+        n_components=2,
+        perplexity=perplexity,
+        random_state=RANDOM_STATE,
+        n_jobs=-1,
+    )
+    embedding = tsne.fit(X_tr_pca)
+    tsne_fit_time = time.time() - t0
+    print(f"done ({tsne_fit_time:.1f}s)")
+
+    t0 = time.time()
+    X_test_pca = pca50.transform(x_test_flat[:tsne_samples])
+    X_enc = np.asarray(embedding.transform(X_test_pca), dtype=np.float32)
+    transform_time = time.time() - t0
+    print(f"  transform(test, n={tsne_samples}): {transform_time:.2f}s")
+
+    train_time = pca_time + tsne_fit_time
+    return X_enc, train_time, {"pca50": pca50, "transform_s": transform_time}
 
 
 # ──────────────────────────────────────────────────────────────────

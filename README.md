@@ -57,10 +57,11 @@ The full pipeline completes in ~2 minutes in quick mode, making it easy to verif
 | 1 | **PCA** | Principal Component Analysis → 64 components |
 | 2 | **SAE** | Stacked Autoencoder (Dense 784→512→256→64→256→512→784) |
 | 3 | **CNN-SAE** | Convolutional Stacked Autoencoder (Conv→Pool→Flatten→64) |
-| 4 | **t-SNE** | t-Distributed Stochastic Neighbour Embedding → 2 dims (PCA-50 pre-reduction) |
+| 4 | **t-SNE** | PCA-50, then **openTSNE** fit on a train subset → 2 dims; test points via `transform` |
 | 5 | **UMAP** | Uniform Manifold Approximation and Projection → 64 dims |
 
-> SAE and CNN-SAE use `EarlyStopping(patience=5)` and both train and validation sets during fitting. Only the encoder half is used for downstream clustering.
+> SAE and CNN-SAE use `EarlyStopping(patience=5)` and both train and validation sets during fitting. Only the encoder half is used for downstream clustering.  
+> t-SNE uses the `openTSNE` library so the embedding is learned from training data and test pixels are mapped with `transform` (after the same PCA-50 as in training).
 
 ---
 

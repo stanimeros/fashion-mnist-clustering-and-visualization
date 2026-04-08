@@ -21,7 +21,7 @@ from sklearn.decomposition import PCA
 import config                                          # side-effect: creates figures/
 from config import (
     QUICK_RUN, RANDOM_STATE, CLUSTER_SAMPLES, TSNE_SAMPLES,
-    LATENT_DIM,
+    TSNE_TRAIN_SAMPLES, LATENT_DIM,
 )
 from models import build_pca, build_sae, build_cnn_sae, build_tsne, build_umap
 from clustering import run_clustering_suite, COLUMNS
@@ -167,8 +167,10 @@ print("\n" + "=" * 60)
 print("DR-4: t-SNE")
 print("=" * 60)
 
-# t-SNE encodes the test subset directly (no separate transform step)
-X_enc_tsne, tsne_time, _ = build_tsne(x_train_flat, x_test_flat, TSNE_SAMPLES)
+# t-SNE: PCA-50 + openTSNE fit on train subset, transform on test (see models.py)
+X_enc_tsne, tsne_time, _ = build_tsne(
+    x_train_flat, x_test_flat, TSNE_SAMPLES, TSNE_TRAIN_SAMPLES,
+)
 y_tsne = y_test[:TSNE_SAMPLES]
 x_raw_tsne = x_test_raw[:TSNE_SAMPLES]
 

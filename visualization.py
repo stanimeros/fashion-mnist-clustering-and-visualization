@@ -21,19 +21,29 @@ def save(fname):
 
 # ──────────────────────────────────────────────────────────────────
 def plot_sample_images(x_images, y_labels, title, fname, reconstructed=None):
-    """One image per class; optionally show reconstructions below."""
+    """One random image per class; optionally show reconstructions below."""
     rows = 2 if reconstructed is not None else 1
     fig, axes = plt.subplots(rows, 10, figsize=(15, 3 * rows))
     if rows == 1:
         axes = [axes]
 
+    rng = np.random.default_rng(RANDOM_STATE)
     for c in range(10):
-        idx = np.where(y_labels == c)[0][0]
+        pool = np.where(y_labels == c)[0]
+        if len(pool) == 0:
+            axes[0][c].axis("off")
+            axes[0][c].set_title("(no sample)", fontsize=7)
+            if reconstructed is not None:
+                axes[1][c].axis("off")
+            continue
+        idx = int(rng.choice(pool))
         axes[0][c].imshow(x_images[idx].reshape(28, 28), cmap="gray")
         axes[0][c].set_title(CLASS_NAMES[c], fontsize=7)
         axes[0][c].axis("off")
         if reconstructed is not None:
-            axes[1][c].imshow(reconstructed[idx].reshape(28, 28), cmap="gray")
+            axes[1][c].imshow(
+                np.asarray(reconstructed[idx]).reshape(28, 28), cmap="gray"
+            )
             axes[1][c].set_title("Recon.", fontsize=7)
             axes[1][c].axis("off")
 
@@ -88,33 +98,41 @@ def plot_umap_2d(x_test_flat, y_test):
 
 # ──────────────────────────────────────────────────────────────────
 def plot_cluster_examples(x_images, y_true, labels, dr_name):
-    """For each selected class, show 5 images from the dominant cluster."""
+    """For each selected class, 5 random images with MiniBatchKMeans cluster id."""
     fig, axes = plt.subplots(len(SELECTED_CLASSES), 5, figsize=(10, 8))
+    rng = np.random.default_rng(RANDOM_STATE)
 
     for row_i, cls in enumerate(SELECTED_CLASSES):
         cls_mask   = y_true == cls
         cls_labels = labels[cls_mask]
         cls_images = x_images[cls_mask]
 
-        unique_cl = np.unique(cls_labels[cls_labels != -1])
-        if len(unique_cl) == 0:
+        n_cls = len(cls_images)
+        if n_cls == 0:
             for ax in axes[row_i]:
                 ax.axis("off")
             axes[row_i][0].set_ylabel(CLASS_NAMES[cls], fontsize=9)
             continue
 
-        best_cl  = max(unique_cl, key=lambda c: np.sum(cls_labels == c))
-        cl_imgs  = cls_images[cls_labels == best_cl]
-        n_show   = min(5, len(cl_imgs))
+        n_show = min(5, n_cls)
+        pick = rng.choice(n_cls, size=n_show, replace=False)
 
         for col_i in range(5):
             axes[row_i][col_i].axis("off")
             if col_i < n_show:
-                axes[row_i][col_i].imshow(cl_imgs[col_i].reshape(28, 28), cmap="gray")
+                pix = pick[col_i]
+                axes[row_i][col_i].imshow(
+                    cls_images[pix].reshape(28, 28), cmap="gray"
+                )
+                cl = cls_labels[pix]
+                t = "noise" if cl == -1 else str(int(cl))
+                axes[row_i][col_i].set_title(t, fontsize=7)
 
         axes[row_i][0].set_ylabel(CLASS_NAMES[cls], fontsize=9)
 
-    fig.suptitle(f"Cluster examples – {dr_name} / MiniBatchKMeans")
+    fig.suptitle(
+        f"Random samples (4 classes) – {dr_name} / MiniBatchKMeans (title = cluster)"
+    )
     fname = f"figures/cluster_examples_{dr_name.replace(' ', '_')}.png"
     save(fname)
 
