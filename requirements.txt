@@ -1,5 +1,5 @@
+# keras: bundled / pulled in by tensorflow (use tensorflow.keras in code; do not pin standalone keras)
 tensorflow==2.21.0
-keras==3.13.2
 scikit-learn==1.8.0
 numpy==2.4.4
 pandas==3.0.1

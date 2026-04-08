@@ -23,10 +23,10 @@ cv-clustering/
 
 ## Setup
 
-**Python 3.11 is required** — TensorFlow does not yet support Python 3.12+.
+**Python:** χρησιμοποίησε έκδοση που υποστηρίζει το TensorFlow (συνήθως **3.10–3.12** για TF 2.21). Το `keras` ως ξεχωριστό πακέτο δεν χρειάζεται στο `requirements.txt` — προτιμάται `tensorflow.keras`.
 
 ```bash
-python3.11 -m venv .venv
+python3.11 -m venv .venv   # ή python3.10 / python3.12 αν ταιριάζει με το TF
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
