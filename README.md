@@ -13,7 +13,7 @@ cv-clustering/
 ├── clustering.py      # 5 clustering algorithms + 4 evaluation metrics
 ├── visualization.py   # All matplotlib/seaborn helpers
 ├── main.py            # Pipeline orchestrator
-├── run_pipeline.sh    # venv + deps + run; use `--background` for nohup + logs/
+├── run_pipeline.sh    # venv (αν λείπει) + pip μόνο αν άλλαξε το requirements.txt + run
 ├── logs/              # pipeline-*.log (created by background runs; gitignored)
 ├── requirements.txt
 └── figures/           # All generated plots (created automatically)
@@ -35,7 +35,7 @@ pip install -r requirements.txt
 
 ## Running
 
-**One-shot (recommended):** creates `.venv` if needed, upgrades `pip`, installs `requirements.txt`, then runs the pipeline.
+**One-shot (recommended):** δημιουργεί `.venv` μόνο αν δεν υπάρχει· τρέχει `pip install` μόνο όταν αλλάξει το `requirements.txt` (αποθηκεύεται hash στο `.venv/.requirements.sha256`). Για εκ νέου εγκατάσταση: `FORCE_PIP_INSTALL=1 ./run_pipeline.sh`.
 
 ```bash
 chmod +x run_pipeline.sh
