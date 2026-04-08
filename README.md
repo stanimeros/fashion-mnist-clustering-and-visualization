@@ -8,11 +8,12 @@ Evaluation of 5 dimensionality reduction techniques combined with 5 clustering a
 
 ```
 cv-clustering/
-├── config.py          # All hyper-parameters and the QUICK_RUN flag
+├── config.py          # Hyper-parameters; quick mode via env FASHION_MNIST_QUICK_RUN
 ├── models.py          # Dimensionality reduction builders (PCA, SAE, CNN-SAE, t-SNE, UMAP)
 ├── clustering.py      # 5 clustering algorithms + 4 evaluation metrics
 ├── visualization.py   # All matplotlib/seaborn helpers
 ├── main.py            # Pipeline orchestrator
+├── run_pipeline.sh    # `quick` / `full` launcher (sets FASHION_MNIST_QUICK_RUN)
 ├── requirements.txt
 └── figures/           # All generated plots (created automatically)
 ```
@@ -38,14 +39,26 @@ source .venv/bin/activate
 python main.py
 ```
 
+Full run is the default (`FASHION_MNIST_QUICK_RUN` unset or `0`). On a server, after creating the venv and installing deps once:
+
+```bash
+chmod +x run_pipeline.sh
+./run_pipeline.sh full
+# First-time dependency install on that machine:
+# INSTALL_DEPS=1 ./run_pipeline.sh full
+```
+
 ### Quick smoke-test mode
 
-Set `QUICK_RUN = True` in `config.py` to run with:
-- 3 training epochs (instead of 30)
-- 500 clustering samples (instead of 10 000)
-- 500 t-SNE samples
+Either:
 
-The full pipeline completes in ~2 minutes in quick mode, making it easy to verify everything works before committing to a long run.
+```bash
+FASHION_MNIST_QUICK_RUN=1 python main.py
+# or
+./run_pipeline.sh quick
+```
+
+Quick mode uses 3 training epochs (instead of 30), 500 clustering / t-SNE / TSNE-train samples (instead of 10 000). The full pipeline completes in roughly a couple of minutes in quick mode.
 
 ---
 

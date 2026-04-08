@@ -1,7 +1,12 @@
 import os
 
-# ── Toggle this to True for a fast end-to-end smoke-test ──────────
-QUICK_RUN = False
+# ── Quick smoke-test: FASHION_MNIST_QUICK_RUN=1  (unset or 0 = full run) ──
+QUICK_RUN = os.environ.get("FASHION_MNIST_QUICK_RUN", "0").strip().lower() in (
+    "1",
+    "true",
+    "yes",
+    "on",
+)
 
 RANDOM_STATE = 42
 N_CLUSTERS   = 10        # fashion-mnist has 10 classes
