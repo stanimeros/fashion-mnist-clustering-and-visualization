@@ -16,6 +16,7 @@ cv-clustering/
 ├── run_pipeline.sh    # venv (αν λείπει) + pip μόνο αν άλλαξε το requirements.txt + run
 ├── logs/              # pipeline-*.log (created by background runs; gitignored)
 ├── requirements.txt
+├── results_report.ipynb   # explore results.csv + figures (after a full run)
 └── figures/           # All generated plots (created automatically)
 ```
 
@@ -73,6 +74,10 @@ FASHION_MNIST_QUICK_RUN=1 python main.py
 ```
 
 Quick mode uses 3 training epochs (instead of 30), 500 clustering / t-SNE / TSNE-train samples (instead of 10 000). The full pipeline completes in roughly a couple of minutes in quick mode.
+
+### Results notebook
+
+After `main.py` finishes, open `results_report.ipynb` (from the project root) to browse `results.csv`, metric heatmaps, timing bars, and all PNGs under `figures/`. Install Jupyter if needed: `pip install jupyter ipywidgets`.
 
 ---
 
