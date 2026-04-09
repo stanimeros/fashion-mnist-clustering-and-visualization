@@ -28,4 +28,5 @@ CLASS_NAMES = [
 SELECTED_CLASSES = [0, 2, 5, 9]   # classes shown in cluster-example plots
 
 os.makedirs("figures", exist_ok=True)
+os.makedirs("saved_models", exist_ok=True)
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'

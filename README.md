@@ -17,6 +17,8 @@ cv-clustering/
 ├── logs/              # pipeline-*.log (created by background runs; gitignored)
 ├── requirements.txt
 ├── results_report.ipynb   # explore results.csv + figures (after a full run)
+├── saved_models/      # cached DR weights (gitignored); see persist.py
+├── persist.py         # save/load helpers for PCA, SAE, CNN-SAE, t-SNE, UMAP
 └── figures/           # All generated plots (created automatically)
 ```
 
@@ -78,6 +80,17 @@ Quick mode uses 3 training epochs (instead of 30), 500 clustering / t-SNE / TSNE
 ### Results notebook
 
 After `main.py` finishes, open `results_report.ipynb` (from the project root) to browse `results.csv`, metric heatmaps, timing bars, and all PNGs under `figures/`. Install Jupyter if needed: `pip install jupyter ipywidgets`.
+
+### Cached DR models (`saved_models/`)
+
+Trained PCA, SAE, CNN-SAE, t-SNE bundle (PCA-50 + openTSNE embedding), and UMAP are **saved** after fitting (default). The next run with the **same** training settings reloads them and skips retraining (`DR_TrainTime_s` will be ~0 for those steps). `saved_models/manifest.json` stores the config snapshot; if you change `EPOCHS`, `LATENT_DIM`, `QUICK_RUN`, or t-SNE sample sizes, everything is refit.
+
+| Env | Default | Role |
+|-----|---------|------|
+| `FMNIST_SAVE_MODELS` | `1` | Write artefacts after training |
+| `FMNIST_REUSE_MODELS` | `1` | Load when manifest matches |
+| `FMNIST_FORCE_RETRAIN` | `0` | Set to `1` to ignore cache and retrain all DR models |
+| `FMNIST_MODEL_DIR` | `saved_models` | Output directory |
 
 ---
 

@@ -3,7 +3,7 @@ Fashion-MNIST  –  Dimensionality Reduction + Clustering pipeline
 ================================================================
 Modules
   config.py        – all hyper-parameters and the QUICK_RUN flag
-  models.py        – PCA / SAE / CNN-SAE / t-SNE / UMAP builders
+  models.py        – PCA / SAE / CNN-SAE / t-SNE / UMAP builders (+ persist.py cache)
   clustering.py    – 5 clustering algorithms + 4 evaluation metrics
   visualization.py – all matplotlib helpers
 
