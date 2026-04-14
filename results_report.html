@@ -7822,7 +7822,7 @@ body {
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<h1 id="%CE%9C%CE%B7%CF%87%CE%B1%CE%BD%CE%B9%CE%BA%CE%AE-%CE%9C%CE%AC%CE%B8%CE%B7%CF%83%CE%B7-%CE%BA%CE%B1%CE%B9-%CE%8C%CF%81%CE%B1%CF%83%CE%B7-%CE%A5%CF%80%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CF%83%CF%84%CF%8E%CE%BD---2%CE%B7-%CE%95%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B1-(%CE%9C%CE%B7-%CE%B5%CF%80%CE%B9%CE%B2%CE%BB%CE%B5%CF%80%CF%8C%CE%BC%CE%B5%CE%BD%CE%B7-%CE%BC%CE%AC%CE%B8%CE%B7%CF%83%CE%B7-%E2%80%93-%CE%A3%CF%85%CF%83%CF%84%CE%B1%CE%B4%CE%BF%CF%80%CE%BF%CE%AF%CE%B7%CF%83%CE%B7)">Μηχανική Μάθηση και Όραση Υπολογιστών - 2η Εργασία (Μη επιβλεπόμενη μάθηση – Συσταδοποίηση)<a class="anchor-link" href="#%CE%9C%CE%B7%CF%87%CE%B1%CE%BD%CE%B9%CE%BA%CE%AE-%CE%9C%CE%AC%CE%B8%CE%B7%CF%83%CE%B7-%CE%BA%CE%B1%CE%B9-%CE%8C%CF%81%CE%B1%CF%83%CE%B7-%CE%A5%CF%80%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CF%83%CF%84%CF%8E%CE%BD---2%CE%B7-%CE%95%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B1-(%CE%9C%CE%B7-%CE%B5%CF%80%CE%B9%CE%B2%CE%BB%CE%B5%CF%80%CF%8C%CE%BC%CE%B5%CE%BD%CE%B7-%CE%BC%CE%AC%CE%B8%CE%B7%CF%83%CE%B7-%E2%80%93-%CE%A3%CF%85%CF%83%CF%84%CE%B1%CE%B4%CE%BF%CF%80%CE%BF%CE%AF%CE%B7%CF%83%CE%B7)">¶</a></h1><p><strong>aid26006 Στανήμερος Παντελής — aid26012 Στραφιώτης Νίκος</strong></p>
+<h1 id="Machine-Learning-and-Computer-Vision---2nd-Assignment-(Unsupervised-Learning-%E2%80%93-Clustering)">Machine Learning and Computer Vision - 2nd Assignment (Unsupervised Learning – Clustering)<a class="anchor-link" href="#Machine-Learning-and-Computer-Vision---2nd-Assignment-(Unsupervised-Learning-%E2%80%93-Clustering)">¶</a></h1><p><strong>aid26006 Stanimeros Pantelis — aid26012 Strafiotis Nikos</strong></p>
 <p>Interactive view of <code>results.csv</code> and the figures saved under <code>figures/</code>. Each section loads the data, shows the corresponding table or plot, and comments briefly on what we see.</p>
 </div>
 </div>
@@ -8590,7 +8590,8 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Observation.</strong> UMAP and t-SNE dominate every internal metric — their non-linear 2-D embeddings form tight, well-separated groups, so Silhouette and Calinski–Harabasz shoot up and Davies–Bouldin drops. On Adjusted Rand (agreement with the true Fashion-MNIST labels), UMAP + Birch/GMM are best, while DBSCAN stays poor everywhere because it collapses most points into one or two giant clusters.</p>
+<p><strong>Observation.</strong> The four heatmaps paint a very consistent picture: UMAP and t-SNE dominate every internal metric by a wide margin, because their non-linear 2-D embeddings push same-class points into tight, well-separated groups while pulling different classes apart. That geometry directly inflates Silhouette and Calinski–Harabasz and shrinks Davies–Bouldin. The linear / reconstruction-based methods (Raw, PCA, SAE, CNN-SAE) live in much higher-dimensional spaces where distances are closer to uniform (the curse of dimensionality), so all three internal metrics look mediocre even when the clustering is reasonable.</p>
+<p>On <strong>Adjusted Rand</strong> — the only metric that actually compares to the true Fashion-MNIST labels — the ranking shifts slightly: UMAP + Birch / GMM win, but CNN-SAE + GMM is competitive, which suggests the convolutional features genuinely capture class structure (not just compactness). DBSCAN is the clear loser across the board: with default <code>eps</code> it collapses most of the 60 k points into a single giant cluster (or labels them as noise), giving near-zero Silhouette and Adjusted Rand everywhere except t-SNE / UMAP, where the density gaps are finally wide enough for it to split the data.</p>
 </div>
 </div>
 </div>
@@ -8716,7 +8717,8 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
-<p><strong>Observation.</strong> DR training time dominates the budget: CNN-SAE costs ~19 min to train, SAE and UMAP ~3 min each, while the clustering step itself is always cheap (seconds). Once embedded into low dimensions (t-SNE, UMAP), clustering also runs noticeably faster than on Raw or SAE features.</p>
+<p><strong>Observation.</strong> The cost breakdown is very asymmetric. Dimensionality-reduction training dominates: CNN-SAE is by far the heaviest (~19 min), followed by SAE and UMAP (~3 min each) and t-SNE (~1.5 min); PCA is essentially free. Clustering itself is always cheap in comparison — even the slowest combinations (Agglomerative / GaussianMixture on Raw or SAE) finish in 10–25 s per run.</p>
+<p>There is also a second, less obvious win from non-linear DR: because t-SNE and UMAP reduce the feature space to 2 dimensions, every downstream clustering runs noticeably faster than on Raw pixels (784-D) or the SAE bottleneck (32-D). So the expensive DR step pays for itself twice — better metrics <strong>and</strong> faster clustering — which is why UMAP + Agglomerative / Birch is our recommended pipeline despite the up-front training cost.</p>
 </div>
 </div>
 </div>
@@ -8739,63 +8741,97 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 <div class="cm-editor cm-s-jupyter">
 <div class="highlight hl-ipython3"><pre><span></span><span class="n">FIG_CAPTIONS</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">"00_sample_images.png"</span><span class="p">:</span>
-        <span class="s2">"Random samples from Fashion-MNIST. The 10 classes include visually similar items "</span>
-        <span class="s2">"(pullover / coat / shirt, sneaker / sandal / ankle-boot), which sets a hard ceiling "</span>
-        <span class="s2">"for any clustering that does not know the labels."</span><span class="p">,</span>
+        <span class="s2">"Random samples from Fashion-MNIST, one row per class. The dataset contains 70 000 "</span>
+        <span class="s2">"greyscale 28×28 images across 10 classes, and several of them are genuinely hard to "</span>
+        <span class="s2">"tell apart even for a human — pullover / coat / shirt share the same torso silhouette, "</span>
+        <span class="s2">"and sneaker / sandal / ankle-boot all look like a small dark blob at this resolution. "</span>
+        <span class="s2">"This class overlap is the upper bound on what any unsupervised method can realistically "</span>
+        <span class="s2">"recover."</span><span class="p">,</span>
     <span class="s2">"pca_explained_variance.png"</span><span class="p">:</span>
-        <span class="s2">"Cumulative explained variance of PCA. About ~85 components capture 95</span><span class="si">% o</span><span class="s2">f the "</span>
-        <span class="s2">"variance — PCA is a cheap baseline but keeps pixel-space geometry, so the clusters "</span>
-        <span class="s2">"stay overlapping."</span><span class="p">,</span>
+        <span class="s2">"Cumulative explained variance ratio of PCA on the flattened pixel vectors. The curve "</span>
+        <span class="s2">"rises steeply in the first 20–30 components and then flattens: roughly ~85 components "</span>
+        <span class="s2">"are needed to keep 95 </span><span class="si">% o</span><span class="s2">f the variance. PCA is useful as a cheap, deterministic "</span>
+        <span class="s2">"baseline, but because it is a *linear* projection it cannot untangle classes that are "</span>
+        <span class="s2">"non-linearly mixed in pixel space — which is exactly the Fashion-MNIST regime."</span><span class="p">,</span>
     <span class="s2">"sae_reconstructions.png"</span><span class="p">:</span>
-        <span class="s2">"Stacked (fully-connected) autoencoder reconstructions. Silhouettes are preserved, "</span>
-        <span class="s2">"fine texture is blurred — the 32-D bottleneck is compact but loses local detail."</span><span class="p">,</span>
+        <span class="s2">"Reconstructions from the fully-connected Stacked AutoEncoder (top row: originals, "</span>
+        <span class="s2">"bottom row: decoder output through a 32-D bottleneck). Global silhouettes are "</span>
+        <span class="s2">"recovered well, but fine textures (stripes, prints, laces) are blurred away. The "</span>
+        <span class="s2">"bottleneck is a compact feature vector, but it throws away precisely the detail that "</span>
+        <span class="s2">"would help separate visually similar upper-body garments."</span><span class="p">,</span>
     <span class="s2">"cnnsae_reconstructions.png"</span><span class="p">:</span>
-        <span class="s2">"Convolutional SAE reconstructions. Sharper edges and textures than the fully-connected "</span>
-        <span class="s2">"SAE, which is why CNN-SAE features land closer to the true labels on Adjusted Rand."</span><span class="p">,</span>
+        <span class="s2">"Reconstructions from the Convolutional SAE. Edges, contours and textures are visibly "</span>
+        <span class="s2">"sharper than the dense SAE — convolutions exploit the 2-D pixel structure and learn "</span>
+        <span class="s2">"translation-invariant filters. This extra fidelity is reflected downstream: CNN-SAE "</span>
+        <span class="s2">"features reach the best Adjusted Rand among the representation-learning methods."</span><span class="p">,</span>
     <span class="s2">"umap_2d.png"</span><span class="p">:</span>
-        <span class="s2">"2-D UMAP projection coloured by the true class. Footwear, trousers and bags already "</span>
-        <span class="s2">"separate into their own islands; the upper-body garments (shirt / pullover / coat) "</span>
-        <span class="s2">"stay entangled — exactly the classes humans confuse too."</span><span class="p">,</span>
+        <span class="s2">"2-D UMAP projection of the test set coloured by ground-truth class. Footwear, "</span>
+        <span class="s2">"trousers and bags form their own clearly detached islands. The three "</span>
+        <span class="s2">"upper-body classes (shirt / pullover / coat) remain partially mixed in the central "</span>
+        <span class="s2">"blob — the same confusion a human annotator would make, confirming that the remaining "</span>
+        <span class="s2">"error is intrinsic to the labels, not a failure of the embedding."</span><span class="p">,</span>
     <span class="s2">"scatter_Raw.png"</span><span class="p">:</span>
-        <span class="s2">"Clustering on raw 784-D pixels, plotted in a 2-D view. Everything overlaps; "</span>
-        <span class="s2">"pixel distance is a weak similarity measure for clothing."</span><span class="p">,</span>
+        <span class="s2">"Cluster assignments on raw 784-D pixels, visualised in a 2-D reference view. Clusters "</span>
+        <span class="s2">"overlap massively because Euclidean distance in pixel space mostly measures brightness "</span>
+        <span class="s2">"and silhouette area, not garment type. This is the worst-case baseline and explains "</span>
+        <span class="s2">"the low Silhouette / Adjusted Rand values for the 'Raw' row of the heatmap."</span><span class="p">,</span>
     <span class="s2">"scatter_PCA.png"</span><span class="p">:</span>
-        <span class="s2">"Clustering on 85-D PCA features. Slightly cleaner than Raw but the linear projection "</span>
-        <span class="s2">"cannot untangle the garment classes."</span><span class="p">,</span>
+        <span class="s2">"Cluster assignments on 85-D PCA features. Slightly tidier than Raw — PCA strips out "</span>
+        <span class="s2">"isotropic pixel noise — but since the projection is linear the class manifolds are "</span>
+        <span class="s2">"still entangled, so clusters continue to overlap heavily."</span><span class="p">,</span>
     <span class="s2">"scatter_SAE.png"</span><span class="p">:</span>
-        <span class="s2">"Clustering on 32-D fully-connected SAE features. Some structure emerges; clusters are "</span>
-        <span class="s2">"more compact than PCA but still heavily overlap in 2-D."</span><span class="p">,</span>
+        <span class="s2">"Cluster assignments on the 32-D dense-SAE bottleneck. Some local structure emerges "</span>
+        <span class="s2">"(clusters are more compact than PCA), but the embedding is still not class-separable, "</span>
+        <span class="s2">"so several clusters span multiple true labels."</span><span class="p">,</span>
     <span class="s2">"scatter_CNN-SAE.png"</span><span class="p">:</span>
-        <span class="s2">"Clustering on CNN-SAE features — the convolutional encoder captures shape better, "</span>
-        <span class="s2">"giving the best Adjusted Rand among the feature-learning methods."</span><span class="p">,</span>
+        <span class="s2">"Cluster assignments on the CNN-SAE features. The convolutional encoder captures shape "</span>
+        <span class="s2">"and texture better, producing the best Adjusted Rand of the autoencoder family "</span>
+        <span class="s2">"(~0.46 with GMM). Boundaries between clusters are sharper, especially for footwear."</span><span class="p">,</span>
     <span class="s2">"scatter_t-SNE.png"</span><span class="p">:</span>
-        <span class="s2">"Clustering on the 2-D t-SNE embedding. Clusters become visually obvious, matching the "</span>
-        <span class="s2">"sharp jump in Silhouette and Calinski–Harabasz seen in the heatmaps."</span><span class="p">,</span>
+        <span class="s2">"Cluster assignments on the 2-D t-SNE embedding. Clusters now pop out visually as "</span>
+        <span class="s2">"well-defined blobs, which is exactly why Silhouette and Calinski–Harabasz jump an order "</span>
+        <span class="s2">"of magnitude in the heatmaps. The caveat with t-SNE is that *global* distances are not "</span>
+        <span class="s2">"meaningful — only local neighbourhoods are trustworthy."</span><span class="p">,</span>
     <span class="s2">"scatter_UMAP.png"</span><span class="p">:</span>
-        <span class="s2">"Clustering on the 2-D UMAP embedding — our best overall setup: compact, well-separated "</span>
-        <span class="s2">"clusters and the highest agreement with ground truth."</span><span class="p">,</span>
+        <span class="s2">"Cluster assignments on the 2-D UMAP embedding — our best overall configuration. "</span>
+        <span class="s2">"Clusters are compact, well-separated and also preserve global topology better than "</span>
+        <span class="s2">"t-SNE (islands of similar garments end up near each other). This is the single "</span>
+        <span class="s2">"cell that wins on Silhouette, Calinski–Harabasz, Davies–Bouldin and Adjusted Rand "</span>
+        <span class="s2">"simultaneously."</span><span class="p">,</span>
     <span class="s2">"heatmap_silhouette.png"</span><span class="p">:</span>
-        <span class="s2">"Silhouette score across every (DR, clustering) combination. UMAP + Agglomerative is the "</span>
-        <span class="s2">"single best cell; DBSCAN is systematically weak because it refuses to split the "</span>
-        <span class="s2">"high-density core."</span><span class="p">,</span>
+        <span class="s2">"Standalone Silhouette heatmap (same data as the top-left panel of the 2×2 grid, but "</span>
+        <span class="s2">"larger). Reading by columns: every clustering algorithm improves dramatically when "</span>
+        <span class="s2">"fed a t-SNE or UMAP embedding. Reading by rows: DBSCAN is the only algorithm that "</span>
+        <span class="s2">"fails even on UMAP, because it keeps labelling most points as 'noise' (-1) instead of "</span>
+        <span class="s2">"splitting the high-density core."</span><span class="p">,</span>
     <span class="s2">"cluster_examples_Raw.png"</span><span class="p">:</span>
-        <span class="s2">"Representative images per cluster for Raw pixels. Clusters mix garment types — the "</span>
-        <span class="s2">"algorithm is grouping by brightness / silhouette area rather than class."</span><span class="p">,</span>
+        <span class="s2">"Representative images sampled from each discovered cluster on Raw features. Clusters "</span>
+        <span class="s2">"are visibly *not* class-aligned — a single cluster often mixes T-shirts, shirts and "</span>
+        <span class="s2">"pullovers. The algorithm is essentially grouping by overall ink coverage / silhouette "</span>
+        <span class="s2">"area rather than garment semantics."</span><span class="p">,</span>
     <span class="s2">"cluster_examples_PCA.png"</span><span class="p">:</span>
-        <span class="s2">"Cluster examples after PCA. Slightly more coherent than Raw but shirts/pullovers/coats "</span>
-        <span class="s2">"still fall into the same clusters."</span><span class="p">,</span>
+        <span class="s2">"Cluster examples after PCA. A small step up from Raw: footwear clusters are starting "</span>
+        <span class="s2">"to become coherent, but the upper-body garments are still routinely co-clustered — "</span>
+        <span class="s2">"same root cause, just with the isotropic pixel noise removed."</span><span class="p">,</span>
     <span class="s2">"cluster_examples_SAE.png"</span><span class="p">:</span>
-        <span class="s2">"Cluster examples after the fully-connected SAE. Footwear clusters look clean; "</span>
-        <span class="s2">"upper-body garments remain mixed."</span><span class="p">,</span>
+        <span class="s2">"Cluster examples after the fully-connected SAE. Shoe and trouser clusters are now "</span>
+        <span class="s2">"clearly homogeneous, and bag clusters become distinct — but shirts / pullovers / coats "</span>
+        <span class="s2">"still bleed into each other, reflecting the blurred SAE reconstructions."</span><span class="p">,</span>
     <span class="s2">"cluster_examples_CNN-SAE.png"</span><span class="p">:</span>
-        <span class="s2">"Cluster examples after CNN-SAE. Per-cluster images are visibly more consistent, "</span>
-        <span class="s2">"confirming the higher Adjusted Rand score."</span><span class="p">,</span>
+        <span class="s2">"Cluster examples after CNN-SAE. Per-cluster images are visibly more consistent than "</span>
+        <span class="s2">"any previous method: footwear subtypes start to split (sneakers vs. ankle-boots), and "</span>
+        <span class="s2">"dresses / trousers form clean clusters. This qualitative improvement matches the "</span>
+        <span class="s2">"quantitative jump on Adjusted Rand."</span><span class="p">,</span>
     <span class="s2">"cluster_examples_t-SNE.png"</span><span class="p">:</span>
         <span class="s2">"Cluster examples after t-SNE. Clusters are internally homogeneous — each row reads as "</span>
-        <span class="s2">"one garment type."</span><span class="p">,</span>
+        <span class="s2">"essentially one garment type. The only remaining ambiguity is, predictably, in the "</span>
+        <span class="s2">"shirt / pullover / coat group, which is an intrinsic class-overlap issue."</span><span class="p">,</span>
     <span class="s2">"cluster_examples_UMAP.png"</span><span class="p">:</span>
-        <span class="s2">"Cluster examples after UMAP. The cleanest result: clusters correspond almost one-to-one "</span>
-        <span class="s2">"to Fashion-MNIST classes, with residual confusion only between shirt / pullover / coat."</span><span class="p">,</span>
+        <span class="s2">"Cluster examples after UMAP. The cleanest result of the whole study: the 10 clusters "</span>
+        <span class="s2">"correspond almost one-to-one to the 10 Fashion-MNIST classes, with residual confusion "</span>
+        <span class="s2">"confined to shirt ↔ pullover ↔ coat. This is what you would expect from an "</span>
+        <span class="s2">"unsupervised pipeline that has recovered the true label structure up to the inherent "</span>
+        <span class="s2">"class overlap in the dataset."</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">caption</span> <span class="ow">in</span> <span class="n">FIG_CAPTIONS</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
@@ -8827,7 +8863,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Random samples from Fashion-MNIST. The 10 classes include visually similar items (pullover / coat / shirt, sneaker / sandal / ankle-boot), which sets a hard ceiling for any clustering that does not know the labels.</em></p>
+<p><em>Random samples from Fashion-MNIST, one row per class. The dataset contains 70 000 greyscale 28×28 images across 10 classes, and several of them are genuinely hard to tell apart even for a human — pullover / coat / shirt share the same torso silhouette, and sneaker / sandal / ankle-boot all look like a small dark blob at this resolution. This class overlap is the upper bound on what any unsupervised method can realistically recover.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8842,7 +8878,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Cumulative explained variance of PCA. About ~85 components capture 95% of the variance — PCA is a cheap baseline but keeps pixel-space geometry, so the clusters stay overlapping.</em></p>
+<p><em>Cumulative explained variance ratio of PCA on the flattened pixel vectors. The curve rises steeply in the first 20–30 components and then flattens: roughly ~85 components are needed to keep 95 % of the variance. PCA is useful as a cheap, deterministic baseline, but because it is a *linear* projection it cannot untangle classes that are non-linearly mixed in pixel space — which is exactly the Fashion-MNIST regime.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8857,7 +8893,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Stacked (fully-connected) autoencoder reconstructions. Silhouettes are preserved, fine texture is blurred — the 32-D bottleneck is compact but loses local detail.</em></p>
+<p><em>Reconstructions from the fully-connected Stacked AutoEncoder (top row: originals, bottom row: decoder output through a 32-D bottleneck). Global silhouettes are recovered well, but fine textures (stripes, prints, laces) are blurred away. The bottleneck is a compact feature vector, but it throws away precisely the detail that would help separate visually similar upper-body garments.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8872,7 +8908,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Convolutional SAE reconstructions. Sharper edges and textures than the fully-connected SAE, which is why CNN-SAE features land closer to the true labels on Adjusted Rand.</em></p>
+<p><em>Reconstructions from the Convolutional SAE. Edges, contours and textures are visibly sharper than the dense SAE — convolutions exploit the 2-D pixel structure and learn translation-invariant filters. This extra fidelity is reflected downstream: CNN-SAE features reach the best Adjusted Rand among the representation-learning methods.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8887,7 +8923,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>2-D UMAP projection coloured by the true class. Footwear, trousers and bags already separate into their own islands; the upper-body garments (shirt / pullover / coat) stay entangled — exactly the classes humans confuse too.</em></p>
+<p><em>2-D UMAP projection of the test set coloured by ground-truth class. Footwear, trousers and bags form their own clearly detached islands. The three upper-body classes (shirt / pullover / coat) remain partially mixed in the central blob — the same confusion a human annotator would make, confirming that the remaining error is intrinsic to the labels, not a failure of the embedding.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8902,7 +8938,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Clustering on raw 784-D pixels, plotted in a 2-D view. Everything overlaps; pixel distance is a weak similarity measure for clothing.</em></p>
+<p><em>Cluster assignments on raw 784-D pixels, visualised in a 2-D reference view. Clusters overlap massively because Euclidean distance in pixel space mostly measures brightness and silhouette area, not garment type. This is the worst-case baseline and explains the low Silhouette / Adjusted Rand values for the 'Raw' row of the heatmap.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8917,7 +8953,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Clustering on 85-D PCA features. Slightly cleaner than Raw but the linear projection cannot untangle the garment classes.</em></p>
+<p><em>Cluster assignments on 85-D PCA features. Slightly tidier than Raw — PCA strips out isotropic pixel noise — but since the projection is linear the class manifolds are still entangled, so clusters continue to overlap heavily.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8932,7 +8968,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Clustering on 32-D fully-connected SAE features. Some structure emerges; clusters are more compact than PCA but still heavily overlap in 2-D.</em></p>
+<p><em>Cluster assignments on the 32-D dense-SAE bottleneck. Some local structure emerges (clusters are more compact than PCA), but the embedding is still not class-separable, so several clusters span multiple true labels.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8947,7 +8983,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Clustering on CNN-SAE features — the convolutional encoder captures shape better, giving the best Adjusted Rand among the feature-learning methods.</em></p>
+<p><em>Cluster assignments on the CNN-SAE features. The convolutional encoder captures shape and texture better, producing the best Adjusted Rand of the autoencoder family (~0.46 with GMM). Boundaries between clusters are sharper, especially for footwear.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8962,7 +8998,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Clustering on the 2-D t-SNE embedding. Clusters become visually obvious, matching the sharp jump in Silhouette and Calinski–Harabasz seen in the heatmaps.</em></p>
+<p><em>Cluster assignments on the 2-D t-SNE embedding. Clusters now pop out visually as well-defined blobs, which is exactly why Silhouette and Calinski–Harabasz jump an order of magnitude in the heatmaps. The caveat with t-SNE is that *global* distances are not meaningful — only local neighbourhoods are trustworthy.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8977,7 +9013,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Clustering on the 2-D UMAP embedding — our best overall setup: compact, well-separated clusters and the highest agreement with ground truth.</em></p>
+<p><em>Cluster assignments on the 2-D UMAP embedding — our best overall configuration. Clusters are compact, well-separated and also preserve global topology better than t-SNE (islands of similar garments end up near each other). This is the single cell that wins on Silhouette, Calinski–Harabasz, Davies–Bouldin and Adjusted Rand simultaneously.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -8992,7 +9028,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Silhouette score across every (DR, clustering) combination. UMAP + Agglomerative is the single best cell; DBSCAN is systematically weak because it refuses to split the high-density core.</em></p>
+<p><em>Standalone Silhouette heatmap (same data as the top-left panel of the 2×2 grid, but larger). Reading by columns: every clustering algorithm improves dramatically when fed a t-SNE or UMAP embedding. Reading by rows: DBSCAN is the only algorithm that fails even on UMAP, because it keeps labelling most points as 'noise' (-1) instead of splitting the high-density core.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -9007,7 +9043,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Representative images per cluster for Raw pixels. Clusters mix garment types — the algorithm is grouping by brightness / silhouette area rather than class.</em></p>
+<p><em>Representative images sampled from each discovered cluster on Raw features. Clusters are visibly *not* class-aligned — a single cluster often mixes T-shirts, shirts and pullovers. The algorithm is essentially grouping by overall ink coverage / silhouette area rather than garment semantics.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -9022,7 +9058,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Cluster examples after PCA. Slightly more coherent than Raw but shirts/pullovers/coats still fall into the same clusters.</em></p>
+<p><em>Cluster examples after PCA. A small step up from Raw: footwear clusters are starting to become coherent, but the upper-body garments are still routinely co-clustered — same root cause, just with the isotropic pixel noise removed.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -9037,7 +9073,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Cluster examples after the fully-connected SAE. Footwear clusters look clean; upper-body garments remain mixed.</em></p>
+<p><em>Cluster examples after the fully-connected SAE. Shoe and trouser clusters are now clearly homogeneous, and bag clusters become distinct — but shirts / pullovers / coats still bleed into each other, reflecting the blurred SAE reconstructions.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -9052,7 +9088,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Cluster examples after CNN-SAE. Per-cluster images are visibly more consistent, confirming the higher Adjusted Rand score.</em></p>
+<p><em>Cluster examples after CNN-SAE. Per-cluster images are visibly more consistent than any previous method: footwear subtypes start to split (sneakers vs. ankle-boots), and dresses / trousers form clean clusters. This qualitative improvement matches the quantitative jump on Adjusted Rand.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -9067,7 +9103,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Cluster examples after t-SNE. Clusters are internally homogeneous — each row reads as one garment type.</em></p>
+<p><em>Cluster examples after t-SNE. Clusters are internally homogeneous — each row reads as essentially one garment type. The only remaining ambiguity is, predictably, in the shirt / pullover / coat group, which is an intrinsic class-overlap issue.</em></p>
 </div>
 </div>
 <div class="jp-OutputArea-child">
@@ -9082,7 +9118,7 @@ Lower is better: <strong>Davies–Bouldin</strong>.</p>
 </div>
 <div class="jp-OutputArea-child">
 <div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-OutputArea-output" data-mime-type="text/markdown" tabindex="0">
-<p><em>Cluster examples after UMAP. The cleanest result: clusters correspond almost one-to-one to Fashion-MNIST classes, with residual confusion only between shirt / pullover / coat.</em></p>
+<p><em>Cluster examples after UMAP. The cleanest result of the whole study: the 10 clusters correspond almost one-to-one to the 10 Fashion-MNIST classes, with residual confusion confined to shirt ↔ pullover ↔ coat. This is what you would expect from an unsupervised pipeline that has recovered the true label structure up to the inherent class overlap in the dataset.</em></p>
 </div>
 </div>
 </div>
