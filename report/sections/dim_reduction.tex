@@ -1,0 +1,54 @@
+Six DR configurations were evaluated:
+
+\begin{description}
+  \item[Raw] No reduction; 784-D pixel vectors used directly.
+  \item[PCA] Linear projection retaining 95\% of variance ($\approx$85 components).
+  \item[SAE] Stacked Autoencoder with a 32-D bottleneck (fully connected layers).
+  \item[CNN-SAE] Convolutional Stacked Autoencoder; captures translation-invariant features.
+  \item[t-SNE] Non-linear 2-D embedding preserving local neighbourhoods.
+  \item[UMAP] Non-linear 2-D embedding preserving both local and global structure.
+\end{description}
+
+\subsection{PCA Explained Variance}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth]{pca_explained_variance.png}
+  \caption{Cumulative explained variance of PCA. The curve rises steeply in the first
+    20--30 components and then flattens; $\approx$85 components are needed to retain 95\%
+    of the variance. PCA cannot untangle non-linearly mixed classes in pixel space.}
+  \label{fig:pca_var}
+\end{figure}
+
+\subsection{SAE Reconstructions}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\linewidth]{sae_reconstructions.png}
+  \caption{SAE reconstructions (top: originals, bottom: decoded through a 32-D bottleneck).
+    Global silhouettes are recovered but fine textures (stripes, laces) are blurred away.}
+  \label{fig:sae_recon}
+\end{figure}
+
+\subsection{CNN-SAE Reconstructions}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.75\linewidth]{cnnsae_reconstructions.png}
+  \caption{CNN-SAE reconstructions. Edges and textures are visibly sharper than the dense
+    SAE because convolutions exploit the 2-D pixel structure and learn translation-invariant
+    filters. This fidelity is reflected downstream in better Adjusted Rand scores.}
+  \label{fig:cnnsae_recon}
+\end{figure}
+
+\subsection{UMAP 2-D Projection}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.72\linewidth]{umap_2d.png}
+  \caption{2-D UMAP projection coloured by ground-truth class. Footwear, trousers, and bags
+    form clearly detached islands. The three upper-body classes (shirt / pullover / coat)
+    remain partially mixed — confirming that the remaining confusion is intrinsic to the
+    dataset, not a failure of the embedding.}
+  \label{fig:umap2d}
+\end{figure}

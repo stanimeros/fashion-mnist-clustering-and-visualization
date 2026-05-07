@@ -1,0 +1,15 @@
+Fashion-MNIST contains 70\,000 greyscale $28\times28$ images across 10 clothing classes
+(T-shirt/top, Trouser, Pullover, Dress, Coat, Sandal, Shirt, Sneaker, Bag, Ankle boot).
+The pixel values are flattened into 784-dimensional vectors for baseline experiments, and
+further projected for DR-based experiments.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.85\linewidth]{00_sample_images.png}
+  \caption{Random samples from Fashion-MNIST, one row per class. Several classes are
+    genuinely hard to distinguish: pullover / coat / shirt share the same torso silhouette,
+    and sneaker / sandal / ankle-boot look like a small dark blob at this resolution.
+    This inherent class overlap is the practical upper bound on what any unsupervised method
+    can recover.}
+  \label{fig:samples}
+\end{figure}

@@ -1,0 +1,95 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\geometry{margin=2.5cm}
+
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{parskip}
+\usepackage{microtype}
+
+\graphicspath{{../figures/}}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!60!black,
+  urlcolor=blue!60!black,
+}
+
+% UoM email prefix: ai + student id (e.g. ai26006, ai26012)
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{1.5cm}
+
+  {\Large\bfseries University of Macedonia\par}
+  \vspace{0.4cm}
+  {\large Department of Applied Informatics\\
+   MSc in Artificial Intelligence \& Data Analytics\par}
+
+  \vfill
+
+  {\large Machine Learning and Computer Vision\par}
+  \vspace{0.5cm}
+  {\LARGE\bfseries 2nd Assignment\\[6pt] Unsupervised Learning \& Clustering\par}
+  \vspace{0.4cm}
+  {\large Fashion-MNIST\par}
+
+  \vfill
+
+  \begin{tabular}{ll}
+    \textbf{Panteleimon Stanimeros} & aid26006 \\
+    \href{mailto:aid26006@uom.edu.gr}{\texttt{aid26006@uom.edu.gr}} & \\[8pt]
+    \textbf{Nikolaos Strafiotis}    & aid26012 \\
+    \href{mailto:aid26012@uom.edu.gr}{\texttt{aid26012@uom.edu.gr}} & \\
+  \end{tabular}
+
+  \vfill
+  {\large\today\par}
+\end{titlepage}
+
+\tableofcontents
+\clearpage
+
+%----------------------------------------------------------------------
+\section{Introduction}
+\input{sections/introduction}
+
+%----------------------------------------------------------------------
+\section{Dataset}
+\input{sections/dataset}
+
+%----------------------------------------------------------------------
+\section{Dimensionality Reduction Methods}
+\input{sections/dim_reduction}
+
+%----------------------------------------------------------------------
+\section{Clustering Algorithms}
+\input{sections/clustering}
+
+%----------------------------------------------------------------------
+\section{Results}
+\input{sections/results}
+
+%----------------------------------------------------------------------
+\section{Figures and Qualitative Analysis}
+\input{sections/figures}
+
+%----------------------------------------------------------------------
+\section{Conclusions}
+\input{sections/conclusions}
+
+\end{document}

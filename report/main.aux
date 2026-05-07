@@ -1,0 +1,65 @@
+\relax 
+\providecommand \babel@aux [2]{\global \let \babel@toc \@gobbletwo }
+\@nameuse{bbl@beforestart}
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\babel@aux{english}{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{2}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {2}Dataset}{2}{section.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Random samples from Fashion-MNIST, one row per class. Several classes are genuinely hard to distinguish: pullover / coat / shirt share the same torso silhouette, and sneaker / sandal / ankle-boot look like a small dark blob at this resolution. This inherent class overlap is the practical upper bound on what any unsupervised method can recover.}}{2}{figure.caption.2}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{fig:samples}{{1}{2}{Random samples from Fashion-MNIST, one row per class. Several classes are genuinely hard to distinguish: pullover / coat / shirt share the same torso silhouette, and sneaker / sandal / ankle-boot look like a small dark blob at this resolution. This inherent class overlap is the practical upper bound on what any unsupervised method can recover}{figure.caption.2}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Dimensionality Reduction Methods}{2}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}PCA Explained Variance}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Cumulative explained variance of PCA. The curve rises steeply in the first 20--30 components and then flattens; $\approx $85 components are needed to retain 95\% of the variance. PCA cannot untangle non-linearly mixed classes in pixel space.}}{3}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:pca_var}{{2}{3}{Cumulative explained variance of PCA. The curve rises steeply in the first 20--30 components and then flattens; $\approx $85 components are needed to retain 95\% of the variance. PCA cannot untangle non-linearly mixed classes in pixel space}{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}SAE Reconstructions}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces SAE reconstructions (top: originals, bottom: decoded through a 32-D bottleneck). Global silhouettes are recovered but fine textures (stripes, laces) are blurred away.}}{3}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:sae_recon}{{3}{3}{SAE reconstructions (top: originals, bottom: decoded through a 32-D bottleneck). Global silhouettes are recovered but fine textures (stripes, laces) are blurred away}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}CNN-SAE Reconstructions}{4}{subsection.3.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces CNN-SAE reconstructions. Edges and textures are visibly sharper than the dense SAE because convolutions exploit the 2-D pixel structure and learn translation-invariant filters. This fidelity is reflected downstream in better Adjusted Rand scores.}}{4}{figure.caption.5}\protected@file@percent }
+\newlabel{fig:cnnsae_recon}{{4}{4}{CNN-SAE reconstructions. Edges and textures are visibly sharper than the dense SAE because convolutions exploit the 2-D pixel structure and learn translation-invariant filters. This fidelity is reflected downstream in better Adjusted Rand scores}{figure.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.4}UMAP 2-D Projection}{4}{subsection.3.4}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces 2-D UMAP projection coloured by ground-truth class. Footwear, trousers, and bags form clearly detached islands. The three upper-body classes (shirt / pullover / coat) remain partially mixed — confirming that the remaining confusion is intrinsic to the dataset, not a failure of the embedding.}}{4}{figure.caption.6}\protected@file@percent }
+\newlabel{fig:umap2d}{{5}{4}{2-D UMAP projection coloured by ground-truth class. Footwear, trousers, and bags form clearly detached islands. The three upper-body classes (shirt / pullover / coat) remain partially mixed — confirming that the remaining confusion is intrinsic to the dataset, not a failure of the embedding}{figure.caption.6}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Clustering Algorithms}{4}{section.4}\protected@file@percent }
+\gdef \LT@i {\LT@entry 
+    {4}{61.4308pt}\LT@entry 
+    {4}{129.7123pt}\LT@entry 
+    {4}{47.68974pt}\LT@entry 
+    {1}{52.04727pt}\LT@entry 
+    {4}{28.33183pt}\LT@entry 
+    {4}{53.00485pt}\LT@entry 
+    {4}{40.49512pt}\LT@entry 
+    {4}{40.49512pt}\LT@entry 
+    {4}{40.49512pt}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Results}{5}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Full Results Table}{5}{subsection.5.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Full results. Bold values mark the best result per metric across all combinations. $K$ = number of clusters found. CH = Calinski--Harabasz ($\uparrow $), DB = Davies--Bouldin ($\downarrow $), Sil = Silhouette ($\uparrow $), ARI = Adjusted Rand ($\uparrow $).}}{6}{table.1}\protected@file@percent }
+\newlabel{tab:full}{{1}{6}{Full results. Bold values mark the best result per metric across all combinations. $K$ = number of clusters found. CH = Calinski--Harabasz ($\uparrow $), DB = Davies--Bouldin ($\downarrow $), Sil = Silhouette ($\uparrow $), ARI = Adjusted Rand ($\uparrow $)}{table.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Best Configurations per Metric}{6}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Single-metric winners. UMAP dominates all four metrics.}}{6}{table.caption.7}\protected@file@percent }
+\newlabel{tab:best}{{2}{6}{Single-metric winners. UMAP dominates all four metrics}{table.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Heatmaps}{6}{subsection.5.3}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Silhouette score heatmap (DR rows $\times $ clustering columns). Every algorithm improves dramatically when fed a t-SNE or UMAP embedding. DBSCAN is the only algorithm that fails even on UMAP, because it keeps labelling most points as noise.}}{6}{figure.caption.8}\protected@file@percent }
+\newlabel{fig:heatmap_sil}{{6}{6}{Silhouette score heatmap (DR rows $\times $ clustering columns). Every algorithm improves dramatically when fed a t-SNE or UMAP embedding. DBSCAN is the only algorithm that fails even on UMAP, because it keeps labelling most points as noise}{figure.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Timing Analysis}{6}{subsection.5.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Heatmap Observations}{7}{subsection.5.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Figures and Qualitative Analysis}{7}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}Scatter Plots}{7}{subsection.6.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Cluster assignments on raw 784-D pixels (2-D reference view). Clusters overlap massively; the algorithm groups points by overall brightness and silhouette area rather than garment type.}}{7}{figure.caption.9}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Cluster assignments on 85-D PCA features. Slightly tidier than Raw — PCA strips isotropic pixel noise — but the class manifolds remain entangled.}}{8}{figure.caption.10}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Cluster assignments on the 32-D dense-SAE bottleneck. Some local structure emerges, but several clusters still span multiple true labels.}}{8}{figure.caption.11}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Cluster assignments on CNN-SAE features. Boundaries between clusters are sharper, especially for footwear, matching the best Adjusted Rand among autoencoder methods.}}{9}{figure.caption.12}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Cluster assignments on the 2-D t-SNE embedding. Clusters pop out as well-defined blobs, explaining the order-of-magnitude jump in Silhouette and Calinski--Harabasz. Global distances are not meaningful in t-SNE.}}{9}{figure.caption.13}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Cluster assignments on the 2-D UMAP embedding — our best overall configuration. Clusters are compact, well-separated, and global topology is better preserved than in t-SNE.}}{10}{figure.caption.14}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Cluster Examples}{11}{subsection.6.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Representative images from each cluster on Raw features. Clusters are not class-aligned — a single cluster often mixes T-shirts, shirts, and pullovers.}}{11}{figure.caption.15}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Cluster examples after PCA. Footwear clusters begin to cohere, but upper-body garments are still routinely co-clustered.}}{12}{figure.caption.16}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Cluster examples after the fully-connected SAE. Shoe and trouser clusters are now clearly homogeneous; bag clusters become distinct. Shirts / pullovers / coats still bleed into each other.}}{13}{figure.caption.17}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Cluster examples after CNN-SAE. Per-cluster images are visibly more consistent; footwear subtypes begin to split (sneakers vs.\ ankle-boots), and dresses / trousers form clean clusters.}}{14}{figure.caption.18}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Cluster examples after t-SNE. Each cluster reads as essentially one garment type. Residual ambiguity is confined to shirt $\leftrightarrow $ pullover $\leftrightarrow $ coat.}}{15}{figure.caption.19}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Cluster examples after UMAP — the cleanest result of the study. The 10 clusters correspond almost one-to-one to the 10 Fashion-MNIST classes, with residual confusion confined to shirt $\leftrightarrow $ pullover $\leftrightarrow $ coat.}}{16}{figure.caption.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusions}{16}{section.7}\protected@file@percent }
+\gdef \@abspage@last{18}

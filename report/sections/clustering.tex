@@ -1,0 +1,13 @@
+Five clustering algorithms were applied to every DR embedding:
+
+\begin{description}
+  \item[MiniBatchKMeans] Scalable approximation of $k$-means ($k=10$).
+  \item[DBSCAN] Density-based; number of clusters determined by data density.
+  \item[AgglomerativeClustering] Hierarchical, Ward linkage, $k=10$.
+  \item[GaussianMixture (GMM)] Soft assignment via EM with 10 components.
+  \item[Birch] Incremental tree-based method, $k=10$.
+\end{description}
+
+All partition-based methods are run with $k=10$ to match the 10 true Fashion-MNIST classes.
+DBSCAN's $\varepsilon$ parameter was tuned per embedding; the number of discovered clusters
+varies and is reported in the results table.
