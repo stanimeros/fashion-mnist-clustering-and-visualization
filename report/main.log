@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.5)  7 MAY 2026 18:56
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.5)  10 MAY 2026 17:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -622,22 +622,22 @@ Package pdftex.def Info: ../figures/umap_2d.png  used on input line 48.
 )
 (./sections/clustering.tex [4 <../figures/cnnsae_reconstructions.png> <../figur
 es/umap_2d.png>]) (./sections/results.tex
-Overfull \hbox (38.45804pt too wide) in alignment at lines 6--10
+Overfull \hbox (33.67387pt too wide) in alignment at lines 6--10
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (38.45804pt too wide) in alignment at lines 10--14
+Overfull \hbox (33.67387pt too wide) in alignment at lines 10--14
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (38.45804pt too wide) in alignment at lines 14--16
+Overfull \hbox (33.67387pt too wide) in alignment at lines 14--16
  [] [] [] [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (38.45804pt too wide) in alignment at lines 16--57
+Overfull \hbox (33.67387pt too wide) in alignment at lines 16--58
  [] [] [] [] [] [] [] [] [] 
  []
 
@@ -647,7 +647,7 @@ ignored: Infinite glue shrinkage found in box being split [5]
 File: ../figures/heatmap_silhouette.png Graphic file (type png)
 <use ../figures/heatmap_silhouette.png>
 Package pdftex.def Info: ../figures/heatmap_silhouette.png  used on input line 
-81.
+82.
 (pdftex.def)             Requested size: 455.24411pt x 206.93654pt.
  [6 <../figures/heatmap_silhouette.png>]) (./sections/figures.tex
 <../figures/scatter_Raw.png, id=160, 505.89pt x 433.62pt>
@@ -737,11 +737,11 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 8D6224DA343BDA60E8ABA59380AC33FC;2625.
  ) 
 Here is how much of TeX's memory you used:
- 15494 strings out of 469006
- 254391 string characters out of 5454814
- 732364 words of memory out of 5000000
+ 15486 strings out of 469006
+ 254311 string characters out of 5454814
+ 732446 words of memory out of 5000000
  43820 multiletter control sequences out of 15000+600000
- 642318 words of font info for 123 fonts, out of 8000000 for 9000
+ 642038 words of font info for 119 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  75i,9n,79p,1001b,627s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
@@ -756,7 +756,7 @@ ublic/cm-super/sfrm1095.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/type
 1/public/cm-super/sfrm1200.pfb></usr/local/texlive/2026basic/texmf-dist/fonts/t
 ype1/public/cm-super/sfti1095.pfb></usr/local/texlive/2026basic/texmf-dist/font
 s/type1/public/cm-super/sftt1095.pfb>
-Output written on main.pdf (18 pages, 1407420 bytes).
+Output written on main.pdf (18 pages, 1406086 bytes).
 PDF statistics:
  312 PDF objects out of 1000 (max. 8388607)
  231 compressed objects within 3 object streams

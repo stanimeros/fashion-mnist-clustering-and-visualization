@@ -1,25 +1,25 @@
 The key findings of this study are:
 
 \begin{enumerate}
-  \item \textbf{UMAP + Agglomerative Clustering} is the single best pipeline, winning on
-    Silhouette (0.489), Calinski--Harabasz (20\,010), and Davies--Bouldin (0.715) simultaneously.
-    UMAP + Birch achieves the highest Adjusted Rand (0.470).
+  \item \textbf{UMAP + MiniBatchKMeans} is the single best pipeline overall, achieving the
+    highest Silhouette (0.541) and Adjusted Rand (0.494) simultaneously.
+    UMAP + Birch wins on Calinski--Harabasz (35\,899) and Davies--Bouldin (0.658).
   \item \textbf{Non-linear DR (UMAP / t-SNE) is essential.} All internal metrics jump an
-    order of magnitude compared to linear / reconstruction methods, because the 2-D embeddings
+    order of magnitude compared to linear / reconstruction methods, because their embeddings
     push same-class points into tight, well-separated groups.
-  \item \textbf{CNN-SAE + GMM} (ARI $\approx$ 0.462) is the best representation-learning
+  \item \textbf{CNN-SAE + GMM} (ARI $\approx$ 0.463) is the best representation-learning
     approach, demonstrating that convolutional features capture genuine class structure even
     without explicit supervision.
-  \item \textbf{DBSCAN consistently underperforms.} With fixed hyperparameters it collapses
-    most data into one cluster or noise in high-dimensional spaces; it only partly recovers in
-    the 2-D t-SNE / UMAP regime.
-  \item \textbf{Training cost is dominated by DR.} CNN-SAE ($\approx$19 min) and SAE/UMAP
-    ($\approx$3 min) are the most expensive; PCA is essentially free. Non-linear DR also speeds
-    up downstream clustering by reducing dimensionality to 2.
+  \item \textbf{DBSCAN consistently underperforms.} With auto-tuned hyperparameters it
+    collapses most data into one cluster or noise in high-dimensional spaces; it only partly
+    recovers in the compact t-SNE / UMAP regime.
+  \item \textbf{Training cost is dominated by DR.} CNN-SAE ($\approx$6 min on GPU) and
+    t-SNE / UMAP ($\approx$1.6 min) are the most expensive; PCA is essentially free.
+    Non-linear DR also speeds up downstream clustering by producing lower-dimensional embeddings.
   \item \textbf{Inherent class overlap} (shirt / pullover / coat) is the hard ceiling; no
-    unsupervised method fully resolves it, and neither would a human annotator.
+    unsupervised method fully resolves it without label information.
 \end{enumerate}
 
 \medskip
-\noindent\textbf{Recommended pipeline:} UMAP (2-D) + Agglomerative Clustering (Ward, $k=10$),
-offering the best balance of clustering quality, qualitative coherence, and acceptable runtime.
+\noindent\textbf{Recommended pipeline:} UMAP + MiniBatchKMeans ($k=10$), offering the best
+balance of clustering quality across all four metrics and acceptable runtime.
