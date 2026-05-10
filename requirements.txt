@@ -1,6 +1,6 @@
 # keras: use tensorflow.keras (bundled by tensorflow)
 # Pins support Python 3.10 (e.g. HPC) and 3.11+; several 1.8+/2.4+/3.0+/1.17+ need Python >=3.11
-tensorflow==2.21.0
+tensorflow[and-cuda]==2.21.0
 scikit-learn==1.7.2
 numpy==2.2.6
 pandas==2.3.3
