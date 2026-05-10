@@ -111,7 +111,8 @@ def build_sae(x_train_flat, x_val_flat):
         e = layers.BatchNormalization()(e)
         e = layers.Dense(256, activation="relu")(e)
         e = layers.BatchNormalization()(e)
-        enc = layers.Dense(LATENT_DIM, activation="relu", name="latent")(e)
+        _lat = layers.Dense(LATENT_DIM, activation="relu", name="latent")(e)
+        enc = layers.BatchNormalization(name="latent_bn")(_lat)
 
         d = layers.Dense(256, activation="relu")(enc)
         d = layers.BatchNormalization()(d)
@@ -176,7 +177,8 @@ def build_cnn_sae(x_train_cnn, x_val_cnn):
         e = layers.Conv2D(64, 3, activation="relu", padding="same")(e)
         e = layers.MaxPooling2D(2)(e)
         e = layers.Flatten()(e)
-        enc = layers.Dense(LATENT_DIM, activation="relu", name="latent")(e)
+        _lat = layers.Dense(LATENT_DIM, activation="relu", name="latent")(e)
+        enc = layers.BatchNormalization(name="latent_bn")(_lat)
 
         d = layers.Dense(7 * 7 * 64, activation="relu")(enc)
         d = layers.Reshape((7, 7, 64))(d)
@@ -249,7 +251,7 @@ def build_tsne(x_train_flat, x_test_flat, tsne_samples, tsne_train_samples):
         train_idx = rng.choice(len(x_train_flat), size=n_train, replace=False)
         X_tr_pca = pca50.transform(x_train_flat[train_idx])
 
-        perplexity = min(30, max(5, (n_train - 1) // 3))
+        perplexity = min(100, max(5, (n_train - 1) // 3))
 
         print(
             f"  openTSNE: fitting on {n_train} train points (perplexity={perplexity}) …",
@@ -301,8 +303,8 @@ def build_umap(x_train_flat):
         t0 = time.time()
         model = umap.UMAP(
             n_components=LATENT_DIM,
-            n_neighbors=15,
-            min_dist=0.1,
+            n_neighbors=30,
+            min_dist=0.0,
             random_state=RANDOM_STATE,
         )
         model.fit(x_train_flat)

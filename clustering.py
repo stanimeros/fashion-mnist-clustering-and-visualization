@@ -86,7 +86,7 @@ def run_clustering_suite(X_encoded, y_true, dr_name, dr_time, results_df=None):
 
     algorithms = {
         "MiniBatchKMeans": (
-            MiniBatchKMeans(n_clusters=N_CLUSTERS, random_state=RANDOM_STATE, n_init=5),
+            MiniBatchKMeans(n_clusters=N_CLUSTERS, random_state=RANDOM_STATE, n_init=10),
             X_encoded,
         ),
         "DBSCAN": (
