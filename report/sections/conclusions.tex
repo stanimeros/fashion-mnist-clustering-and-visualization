@@ -23,3 +23,10 @@ The key findings of this study are:
 \medskip
 \noindent\textbf{Recommended pipeline:} UMAP + MiniBatchKMeans ($k=10$), offering the best
 balance of clustering quality across all four metrics and acceptable runtime.
+
+\medskip
+\noindent\textbf{Was there a combination that achieved the best results on all metrics simultaneously?}
+No. UMAP + MiniBatchKMeans achieves the best Silhouette (0.541) and Adjusted Rand (0.494),
+while UMAP + Birch achieves the best Calinski--Harabasz (35\,899) and Davies--Bouldin (0.658).
+No single combination dominates on all four metrics, though all top configurations share the
+same DR method (UMAP), confirming it as the critical factor in clustering quality.

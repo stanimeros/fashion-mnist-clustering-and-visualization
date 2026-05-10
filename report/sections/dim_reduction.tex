@@ -2,11 +2,11 @@ Six DR configurations were evaluated:
 
 \begin{description}
   \item[Raw] No reduction; 784-D pixel vectors used directly.
-  \item[PCA] Linear projection retaining 95\% of variance ($\approx$85 components).
-  \item[SAE] Stacked Autoencoder with a 32-D bottleneck (fully connected layers).
-  \item[CNN-SAE] Convolutional Stacked Autoencoder; captures translation-invariant features.
+  \item[PCA] Linear projection to 64 components ($\approx$88\% of variance retained).
+  \item[SAE] Stacked Autoencoder with a 64-D bottleneck (fully connected layers).
+  \item[CNN-SAE] Convolutional Stacked Autoencoder with a 64-D bottleneck; captures translation-invariant features.
   \item[t-SNE] Non-linear 2-D embedding preserving local neighbourhoods.
-  \item[UMAP] Non-linear 2-D embedding preserving both local and global structure.
+  \item[UMAP] Non-linear embedding to 64 components preserving both local and global structure; a separate 2-D UMAP is fitted for visualisation only.
 \end{description}
 
 \subsection{PCA Explained Variance}
